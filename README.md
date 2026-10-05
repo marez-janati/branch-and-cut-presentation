@@ -2,4 +2,6 @@
 
 Interactive presentation on the Branch and Cut algorithm for integer programming.
 
-Visit: https://marez-janati.github.io/branch-and-cut-presentation/
+## Deployment Status
+
+GitHub Pages deployment in progress...
