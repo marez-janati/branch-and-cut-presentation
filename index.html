@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Branch and Cut Algorithm — Interactive Lecture</title>
+  
+  <!-- Presentation Stylesheet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- Top Navigation & Progress Bar -->
+  <header class="presentation-header">
+    <div class="header-left">
+      <span class="topic-tag">OPERATIONS RESEARCH • INTEGER PROGRAMMING</span>
+      <h1 class="header-title">The Branch &amp; Cut Algorithm</h1>
+    </div>
+
+    <div class="header-right">
+      <div class="slide-counter-box">
+        <span class="slide-label">STEP</span>
+        <span id="currentSlideNum" class="counter-highlight">1</span>
+        <span class="counter-separator">/</span>
+        <span id="totalSlidesNum">9</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Progress Bar Line -->
+  <div class="progress-track" aria-hidden="true">
+    <div id="progressBar" class="progress-fill"></div>
+  </div>
+
+  <!-- Persistent 3-Point Algorithm Ledger (The Repetition Engine) -->
+  <section class="global-ledger" aria-label="Global Algorithm State">
+    <div class="ledger-item">
+      <span class="ledger-label">GLOBAL INCUMBENT (LB / z&#803;):</span>
+      <span id="ledgerLB" class="ledger-value value-lb">-&infin; (None)</span>
+    </div>
+    <div class="ledger-item">
+      <span class="ledger-label">GLOBAL UPPER BOUND (UB / z&#772;):</span>
+      <span id="ledgerUB" class="ledger-value value-ub">--</span>
+    </div>
+    <div class="ledger-item">
+      <span class="ledger-label">OPTIMALITY GAP:</span>
+      <span id="ledgerGap" class="ledger-value value-gap">100.0%</span>
+    </div>
+    <div class="ledger-item">
+      <span class="ledger-label">ACTIVE QUEUE:</span>
+      <span id="ledgerQueue" class="ledger-value value-queue">[ Root Node 0 ]</span>
+    </div>
+  </section>
+
+  <!-- Main Slide Viewport (Slide files will be injected here) -->
+  <main id="slideStage" class="slide-stage" role="region" aria-live="polite">
+    <div class="loading-state">Loading slide content...</div>
+  </main>
+
+  <!-- Bottom Presentation Controls -->
+  <footer class="presentation-footer">
+    <div class="footer-left">
+      <button id="prevBtn" class="nav-btn secondary-btn" aria-label="Previous Slide">
+        <span class="arrow">&larr;</span> Previous
+      </button>
+      <button id="nextBtn" class="nav-btn primary-btn" aria-label="Next Slide">
+        Next Step <span class="arrow">&rarr;</span>
+      </button>
+    </div>
+
+    <!-- Slide Thumbnails / Direct Navigation Dots -->
+    <nav class="footer-center" aria-label="Slide Selector">
+      <div id="dotContainer" class="dots-container"></div>
+    </nav>
+
+    <div class="footer-right">
+      <span class="keyboard-hint">
+        Use <kbd>&larr;</kbd> <kbd>&rarr;</kbd> or <kbd>Space</kbd> to navigate
+      </span>
+    </div>
+  </footer>
+
+  <!-- Core Slide Orchestrator Script -->
+  <script src="script.js"></script>
+</body>
+</html>

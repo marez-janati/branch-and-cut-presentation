@@ -1,0 +1,131 @@
+<div class="slide-grid" 
+     data-lb="-&infin; (None)" 
+     data-ub="17.44" 
+     data-gap="100.0%" 
+     data-queue="[ Node 0 (Active) ]">
+
+  <!-- Left Column: Pedagogical Walkthrough -->
+  <div class="slide-text-col">
+    <div>
+      <span class="step-tag-pill pill-blue">Step 0 • Continuous Relaxation</span>
+      <h2 class="slide-heading">Root Node 0: Solving the LP Relaxation</h2>
+      <p class="lead-p">
+        Every Branch &amp; Cut execution begins by dropping integrality ($x_1, x_2 \in \mathbb{R}^{\ge 0}$) 
+        and running standard continuous Simplex on the Root Problem (Node 0).
+      </p>
+
+      <!-- Exact Algebra Math Card -->
+      <div class="math-card">
+        <strong>Solving the Active Boundary Intersection:</strong><br/>
+        &nbsp;&nbsp;Line (1): &nbsp;2 x₁ + 5 x₂ = 16 &nbsp;&rArr;&nbsp; 4 x₁ + 10 x₂ = 32<br/>
+        &nbsp;&nbsp;Line (2): &nbsp;4 x₁ + 2 x₂ = 17 &nbsp;&rArr;&nbsp; 4 x₁ + &nbsp;2 x₂ = 17<br/>
+        &nbsp;&nbsp;Subtract:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;8 x₂ = 15 &nbsp;&rArr;&nbsp; <strong>x₂* = 1.875</strong> (15/8)<br/>
+        &nbsp;&nbsp;Back-sub:&nbsp;2 x₁ + 5(1.875) = 16 &nbsp;&rArr;&nbsp; <strong>x₁* = 3.3125</strong> (53/16)<br/><br/>
+        &nbsp;&nbsp;<strong>Objective:</strong> Z* = 3(3.3125) + 4(1.875) = <strong>17.4375</strong>
+      </div>
+
+      <!-- Upper Bound Intuition Callout -->
+      <div class="callout-box" style="background: var(--primary-blue-bg); border: 1.5px solid #93c5fd; color: #1e3a8a;">
+        <div style="font-size: 1.8rem; line-height: 1;">💡</div>
+        <div>
+          <strong>The Meaning of the Upper Bound (UB = 17.44):</strong><br/>
+          Because the continuous polytope completely encloses all integer solutions, 
+          the maximum possible integer profit can <em>never</em> exceed <strong>17.4375</strong>. 
+          This serves as our theoretical ceiling for the entire search.
+        </div>
+      </div>
+    </div>
+
+    <!-- The Persistent Pruning Checklist for Slide 3 -->
+    <div class="pruning-checklist">
+      <div class="checklist-title">Status Checklist (Node 0 Evaluation)</div>
+      <ul class="checklist-items">
+        <li><span class="check-icon active-fail">&cross;</span> Prune by Integrality: <strong>NO</strong> &mdash; Coordinates (3.31, 1.88) are non-integer fractions.</li>
+        <li><span class="check-icon active-fail">&cross;</span> Prune by Bound: <strong>NO</strong> &mdash; UB (17.44) &gt; current LB (-&infin;).</li>
+        <li><span class="check-icon active-fail">&cross;</span> Prune by Infeasibility: <strong>NO</strong> &mdash; Feasible continuous solution exists.</li>
+      </ul>
+      <p style="margin-top: 8px; font-size: 0.95rem; font-weight: 700; color: var(--branch-amber);">
+        &rArr; Node 0 CANNOT be pruned! Action required: Cut or Branch.
+      </p>
+    </div>
+  </div>
+
+  <!-- Right Column: Visual Stage -->
+  <div class="slide-visual-col">
+    <div class="visual-topbar">
+      <span class="visual-title">Continuous Optimum &amp; Search Tree State</span>
+      <div class="diagram-legend">
+        <span class="legend-chip"><span class="chip-circle" style="background: #2563eb;"></span>Objective Line</span>
+        <span class="legend-chip"><span class="chip-circle" style="background: #dc2626;"></span>LP Optimum</span>
+      </div>
+    </div>
+
+    <div class="svg-display-wrap">
+      <svg viewBox="0 0 460 380" aria-label="Root Node LP relaxation and objective contour">
+        <!-- TOP: Search Tree (Root Node only) -->
+        <g transform="translate(140, 10)">
+          <rect x="0" y="0" width="180" height="52" rx="8" fill="#eff6ff" stroke="#2563eb" stroke-width="2.5"/>
+          <text x="90" y="22" fill="#1e40af" font-size="12" font-weight="800" text-anchor="middle">NODE 0 (ROOT)</text>
+          <text x="90" y="40" fill="#2563eb" font-size="12" font-weight="700" text-anchor="middle">LP: (3.31, 1.88) | UB: 17.44</text>
+        </g>
+
+        <!-- Divider line -->
+        <line x1="20" y1="74" x2="440" y2="74" stroke="#e2e8f0" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+        <!-- BOTTOM: Cartesian Geometry -->
+        <g transform="translate(0, 45)">
+          <!-- Coordinate Axes: Origin at (50, 275), 1 unit = 65px -->
+          <line x1="50" y1="275" x2="430" y2="275" stroke="#64748b" stroke-width="2"/>
+          <text x="435" y="280" fill="#334155" font-size="13" font-weight="700">x₁</text>
+          <line x1="50" y1="275" x2="50" y2="40" stroke="#64748b" stroke-width="2"/>
+          <text x="44" y="32" fill="#334155" font-size="13" font-weight="700">x₂</text>
+
+          <!-- Ticks -->
+          <text x="115" y="295" fill="#64748b" font-size="11" font-weight="600" text-anchor="middle">1</text>
+          <text x="180" y="295" fill="#64748b" font-size="11" font-weight="600" text-anchor="middle">2</text>
+          <text x="245" y="295" fill="#64748b" font-size="11" font-weight="600" text-anchor="middle">3</text>
+          <text x="310" y="295" fill="#64748b" font-size="11" font-weight="600" text-anchor="middle">4</text>
+          <text x="375" y="295" fill="#64748b" font-size="11" font-weight="600" text-anchor="middle">5</text>
+
+          <text x="34" y="214" fill="#64748b" font-size="11" font-weight="600">1</text>
+          <text x="34" y="149" fill="#64748b" font-size="11" font-weight="600">2</text>
+          <text x="34" y="84" fill="#64748b" font-size="11" font-weight="600">3</text>
+
+          <!-- Continuous Polytope -->
+          <!-- (0,0)->[50,275], (0,3.2)->[50,67], (3.31,1.88)->[265.3,153], (4.25,0)->[326.2,275] -->
+          <polygon points="50,275 50,67 265.3,153 326.2,275" 
+                   fill="rgba(37, 99, 235, 0.12)" 
+                   stroke="#2563eb" 
+                   stroke-width="2.5"/>
+
+          <!-- Objective Function Contour Line: 3x1 + 4x2 = 17.4375 -->
+          <!-- Passes through (2, 2.859)->[180, 89] and (4, 1.359)->[310, 186.7] -->
+          <line x1="167" y1="80" x2="330" y2="202" stroke="#2563eb" stroke-width="2.5" stroke-dasharray="6,4"/>
+          <text x="335" y="215" fill="#2563eb" font-size="11" font-weight="700">Max Z = 17.44</text>
+
+          <!-- Integer Grid Points -->
+          <g fill="#94a3b8">
+            <circle cx="115" cy="275" r="3.5"/><circle cx="180" cy="275" r="3.5"/>
+            <circle cx="245" cy="275" r="3.5"/><circle cx="310" cy="275" r="3.5"/>
+            <circle cx="115" cy="210" r="3.5"/><circle cx="180" cy="210" r="3.5"/>
+            <circle cx="245" cy="210" r="3.5"/>
+            <circle cx="115" cy="145" r="3.5"/><circle cx="180" cy="145" r="3.5"/>
+            <circle cx="50" cy="80" r="3.5"/>
+          </g>
+
+          <!-- Integer Optimum Target Waiting -->
+          <circle cx="245" cy="145" r="5" fill="#059669"/>
+          <text x="205" y="140" fill="#059669" font-size="11" font-weight="700">(3,2) [Z=17]</text>
+
+          <!-- Continuous Fractional Optimum Marker -->
+          <circle cx="265.3" cy="153" r="7" fill="#dc2626"/>
+          <circle cx="265.3" cy="153" r="14" fill="none" stroke="#dc2626" stroke-width="1.5">
+            <animate attributeName="r" values="7;16;7" dur="2s" repeatCount="indefinite"/>
+          </circle>
+          <text x="278" y="150" fill="#dc2626" font-size="12" font-weight="800">LP Opt (3.31, 1.88)</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+</div>

@@ -1,0 +1,511 @@
+/* ==========================================================================
+   BRANCH & CUT VISUAL MASTERCLASS — PRESENTATION STYLESHEET
+   Light high-contrast theme engineered for lecture halls and projectors
+   ========================================================================== */
+
+:root {
+  /* Color Palette */
+  --bg-page: #f8fafc;
+  --bg-card: #ffffff;
+  --bg-muted: #f1f5f9;
+  
+  --text-main: #0f172a;       /* Deep slate / near black */
+  --text-body: #334155;       /* Readable dark slate */
+  --text-muted: #64748b;      /* Supporting gray */
+  --border: #cbd5e1;          /* Crisp light gray border */
+  --border-focus: #94a3b8;
+
+  /* Semantic Colors */
+  --primary-blue: #2563eb;    /* Continuous LP & relaxations */
+  --primary-blue-bg: #eff6ff;
+  --accent-green: #059669;    /* Incumbent, integer solutions & integral pruning */
+  --accent-green-bg: #ecfdf5;
+  --cut-red: #dc2626;         /* Cuts, fractional traps & bound pruning */
+  --cut-red-bg: #fef2f2;
+  --branch-amber: #d97706;    /* Branching decisions & queue */
+  --branch-amber-bg: #fffbeb;
+
+  /* Typography Scale (Projector / Large Screen Sizing) */
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Courier New", monospace;
+
+  --text-xs: 0.85rem;   /* ~13.6px */
+  --text-sm: 1.0rem;    /* 16px */
+  --text-base: 1.15rem; /* ~18.4px */
+  --text-lg: 1.35rem;   /* ~21.6px */
+  --text-xl: 1.65rem;   /* ~26.4px */
+  --text-2xl: 2.1rem;   /* ~33.6px */
+  --text-3xl: 2.6rem;   /* ~41.6px */
+}
+
+/* Base Reset */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: var(--bg-page);
+  color: var(--text-body);
+  line-height: 1.6;
+  height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ==========================================================================
+   HEADER & TOP PROGRESS BAR
+   ========================================================================== */
+
+.presentation-header {
+  background: var(--bg-card);
+  padding: 14px 32px;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+.topic-tag {
+  display: inline-block;
+  font-size: var(--text-xs);
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  color: var(--primary-blue);
+  margin-bottom: 2px;
+}
+
+.header-title {
+  font-size: var(--text-xl);
+  font-weight: 800;
+  color: var(--text-main);
+  letter-spacing: -0.02em;
+}
+
+.slide-counter-box {
+  display: flex;
+  align-items: baseline;
+  gap: 4px;
+  background: var(--bg-muted);
+  border: 1px solid var(--border);
+  padding: 6px 14px;
+  border-radius: 8px;
+  font-weight: 700;
+  color: var(--text-body);
+}
+
+.slide-label {
+  font-size: var(--text-xs);
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+}
+
+.counter-highlight {
+  font-size: var(--text-lg);
+  color: var(--primary-blue);
+}
+
+.counter-separator {
+  color: var(--text-muted);
+}
+
+.progress-track {
+  height: 4px;
+  width: 100%;
+  background-color: #e2e8f0;
+}
+
+.progress-fill {
+  height: 100%;
+  width: 11.11%; /* 1 of 9 initial */
+  background: linear-gradient(90deg, var(--primary-blue), var(--accent-green));
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ==========================================================================
+   THE REPETITION ENGINE: PERSISTENT 3-POINT GLOBAL LEDGER
+   ========================================================================== */
+
+.global-ledger {
+  background: #ffffff;
+  border-bottom: 2px solid #e2e8f0;
+  padding: 8px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  font-size: var(--text-sm);
+}
+
+.ledger-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ledger-label {
+  font-weight: 700;
+  font-size: var(--text-xs);
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+}
+
+.ledger-value {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: var(--text-base);
+  padding: 2px 8px;
+  border-radius: 4px;
+}
+
+.value-lb {
+  color: var(--accent-green);
+  background: var(--accent-green-bg);
+}
+
+.value-ub {
+  color: var(--primary-blue);
+  background: var(--primary-blue-bg);
+}
+
+.value-gap {
+  color: var(--cut-red);
+  background: var(--cut-red-bg);
+}
+
+.value-queue {
+  color: var(--branch-amber);
+  background: var(--branch-amber-bg);
+}
+
+/* ==========================================================================
+   MAIN SLIDE VIEWPORT
+   ========================================================================== */
+
+.slide-stage {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  padding: 24px 32px;
+  display: flex;
+}
+
+.loading-state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  font-size: var(--text-xl);
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* Reusable 2-Column Presentation Slide Grid */
+.slide-grid {
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: 32px;
+  width: 100%;
+  height: 100%;
+}
+
+/* Left Column: Pedagogical & Math Explanations */
+.slide-text-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow-y: auto;
+  padding-right: 14px;
+}
+
+.step-tag-pill {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 6px;
+  font-size: var(--text-xs);
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.pill-blue { background: var(--primary-blue-bg); color: var(--primary-blue); border: 1px solid #bfdbfe; }
+.pill-green { background: var(--accent-green-bg); color: var(--accent-green); border: 1px solid #a7f3d0; }
+.pill-red { background: var(--cut-red-bg); color: var(--cut-red); border: 1px solid #fecaca; }
+.pill-amber { background: var(--branch-amber-bg); color: var(--branch-amber); border: 1px solid #fde68a; }
+
+.slide-heading {
+  font-size: var(--text-3xl);
+  font-weight: 800;
+  line-height: 1.2;
+  color: var(--text-main);
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.lead-p {
+  font-size: var(--text-base);
+  line-height: 1.6;
+  color: var(--text-body);
+  margin-bottom: 14px;
+}
+
+/* The Math Card */
+.math-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--primary-blue);
+  border-radius: 8px;
+  padding: 16px 20px;
+  margin: 12px 0 16px 0;
+  font-family: var(--font-mono);
+  font-size: var(--text-base);
+  color: var(--text-main);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.03);
+}
+
+.math-card.accent-red { border-left-color: var(--cut-red); }
+.math-card.accent-green { border-left-color: var(--accent-green); }
+.math-card.accent-amber { border-left-color: var(--branch-amber); }
+
+/* The Spoiler Alert Callout */
+.callout-box {
+  border-radius: 8px;
+  padding: 14px 18px;
+  font-size: var(--text-base);
+  line-height: 1.5;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.callout-box.spoiler {
+  background: #fdf2f8;
+  border: 1.5px dashed #db2777;
+  color: #9d174d;
+}
+
+.callout-box.success {
+  background: var(--accent-green-bg);
+  border: 1.5px solid #6ee7b7;
+  color: #065f46;
+}
+
+.callout-box.alert {
+  background: var(--cut-red-bg);
+  border: 1.5px solid #fca5a5;
+  color: #991b1b;
+}
+
+/* The Repetition Checklist (Pruning Rules on each step) */
+.pruning-checklist {
+  background: #ffffff;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 12px 16px;
+  margin-top: 10px;
+}
+
+.checklist-title {
+  font-size: var(--text-xs);
+  font-weight: 800;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.checklist-items {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.checklist-items li {
+  font-size: var(--text-sm);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.check-icon {
+  font-weight: 800;
+  font-size: var(--text-base);
+}
+
+.check-icon.active-pass { color: var(--accent-green); }
+.check-icon.active-fail { color: var(--cut-red); }
+.check-icon.inactive { color: #cbd5e1; }
+
+/* Right Column: Visual Stage (SVG & Canvas Diagrams) */
+.slide-visual-col {
+  background: var(--bg-card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+}
+
+.visual-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+
+.visual-title {
+  font-size: var(--text-sm);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+.diagram-legend {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: var(--text-xs);
+  font-weight: 600;
+}
+
+.legend-chip {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.chip-circle {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.svg-display-wrap {
+  flex: 1;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ==========================================================================
+   FOOTER NAVIGATION & CONTROLS
+   ========================================================================== */
+
+.presentation-footer {
+  background: var(--bg-card);
+  border-top: 1px solid var(--border);
+  padding: 14px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-left {
+  display: flex;
+  gap: 12px;
+}
+
+.nav-btn {
+  font-family: inherit;
+  font-size: var(--text-base);
+  font-weight: 700;
+  padding: 10px 22px;
+  border-radius: 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid transparent;
+  transition: all 0.15s ease-in-out;
+}
+
+.primary-btn {
+  background: var(--primary-blue);
+  color: #ffffff;
+}
+
+.primary-btn:hover:not(:disabled) {
+  background: #1d4ed8;
+  transform: translateY(-1px);
+}
+
+.secondary-btn {
+  background: var(--bg-card);
+  border-color: var(--border);
+  color: var(--text-body);
+}
+
+.secondary-btn:hover:not(:disabled) {
+  background: var(--bg-muted);
+  border-color: var(--border-focus);
+}
+
+.nav-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.dots-container {
+  display: flex;
+  gap: 8px;
+}
+
+.dot-btn {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #cbd5e1;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.dot-btn:hover {
+  background: #94a3b8;
+}
+
+.dot-btn.active {
+  background: var(--primary-blue);
+  width: 32px;
+  border-radius: 7px;
+}
+
+.keyboard-hint {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+kbd {
+  background: var(--bg-muted);
+  border: 1px solid var(--border);
+  border-bottom: 2px solid #94a3b8;
+  padding: 3px 7px;
+  border-radius: 4px;
+  font-family: var(--font-mono);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--text-main);
+}

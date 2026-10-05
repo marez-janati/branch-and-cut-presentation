@@ -1,0 +1,132 @@
+<div class="slide-grid" 
+     data-lb="-&infin; (None)" 
+     data-ub="--" 
+     data-gap="100.0%" 
+     data-queue="[ Root Node 0 ]">
+
+  <!-- Left Column: Pedagogical Walkthrough -->
+  <div class="slide-text-col">
+    <div>
+      <span class="step-tag-pill pill-amber">Motivation • The Rounding Trap</span>
+      <h2 class="slide-heading">Why Can't We Just "Round" the Decimals?</h2>
+      <p class="lead-p">
+        When students first encounter continuous LP relaxation at <strong>(3.31, 1.88)</strong>, 
+        the immediate instinct is to simply round to the nearest whole numbers. 
+        Let us test every possible integer rounding neighbor:
+      </p>
+
+      <!-- The Rounding Trap Math Card -->
+      <div class="math-card accent-red">
+        <strong>Testing All 4 Rounding Neighbors of (3.31, 1.88):</strong><br/><br/>
+        1. <strong>Round BOTH UP &rarr; (4, 2):</strong><br/>
+        &nbsp;&nbsp;&nbsp;4(4) + 2(2) = 20 &le; 17 &nbsp;&cross; <strong>INFEASIBLE (Violates Constraint 2!)</strong><br/><br/>
+        2. <strong>Round x₁ UP, x₂ DOWN &rarr; (4, 1):</strong><br/>
+        &nbsp;&nbsp;&nbsp;4(4) + 2(1) = 18 &le; 17 &nbsp;&cross; <strong>INFEASIBLE (Violates Constraint 2!)</strong><br/><br/>
+        3. <strong>Round BOTH DOWN &rarr; (3, 1):</strong><br/>
+        &nbsp;&nbsp;&nbsp;Feasible, but Z = 3(3) + 4(1) = <strong>13</strong> &nbsp;&excl; <strong>SUBOPTIMAL (Loses 4 units of profit!)</strong><br/><br/>
+        4. <strong>Round x₁ DOWN, x₂ UP &rarr; (3, 2):</strong><br/>
+        &nbsp;&nbsp;&nbsp;Feasible and Z = 3(3) + 4(2) = <strong>17</strong> &nbsp;&check; <strong>THE OPTIMAL POINT!</strong>
+      </div>
+
+      <!-- Warning Callout Box -->
+      <div class="callout-box alert">
+        <div style="font-size: 1.8rem; line-height: 1;">⚠️</div>
+        <div>
+          <strong>The Fundamental Lesson:</strong><br/>
+          In 2 variables, there are 4 rounding candidates (2²). 
+          In a realistic model with <strong>100 variables</strong>, there are <strong>2¹⁰⁰ &asymp; 1.26 &times; 10³⁰</strong> combinations! 
+          Almost all of them violate constraints. <strong>Rounding is not an algorithm.</strong>
+        </div>
+      </div>
+    </div>
+
+    <!-- The Persistent Pruning Checklist for Slide 2 -->
+    <div class="pruning-checklist">
+      <div class="checklist-title">Status Checklist (Step 0 - Why Heuristics Fail)</div>
+      <ul class="checklist-items">
+        <li><span class="check-icon inactive">&bull;</span> Prune by Integrality: <em>Continuous point (3.31, 1.88) is non-integer</em></li>
+        <li><span class="check-icon inactive">&bull;</span> Prune by Bound: <em>No incumbent in hand yet (LB = -&infin;)</em></li>
+        <li><span class="check-icon inactive">&bull;</span> Prune by Infeasibility: <em>Continuous problem is feasible; rounding creates infeasibility</em></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Right Column: Visual Stage -->
+  <div class="slide-visual-col">
+    <div class="visual-topbar">
+      <span class="visual-title">The Rounding Neighbors in Cartesian Space</span>
+      <div class="diagram-legend">
+        <span class="legend-chip"><span class="chip-circle" style="background: #dc2626;"></span>Infeasible</span>
+        <span class="legend-chip"><span class="chip-circle" style="background: #d97706;"></span>Suboptimal</span>
+        <span class="legend-chip"><span class="chip-circle" style="background: #059669;"></span>Optimal</span>
+      </div>
+    </div>
+
+    <div class="svg-display-wrap">
+      <svg viewBox="0 0 460 380" aria-label="Visual breakdown of rounding neighbors around continuous optimum">
+        <!-- Coordinate Axes: Origin at (50, 320), 1 unit = 65px -->
+        <line x1="50" y1="320" x2="430" y2="320" stroke="#64748b" stroke-width="2.5"/>
+        <text x="435" y="325" fill="#334155" font-size="14" font-weight="700">x₁</text>
+        <line x1="50" y1="320" x2="50" y2="25" stroke="#64748b" stroke-width="2.5"/>
+        <text x="44" y="18" fill="#334155" font-size="14" font-weight="700">x₂</text>
+
+        <!-- Axis Numbers -->
+        <text x="115" y="342" fill="#64748b" font-size="12" font-weight="600" text-anchor="middle">1</text>
+        <text x="180" y="342" fill="#64748b" font-size="12" font-weight="600" text-anchor="middle">2</text>
+        <text x="245" y="342" fill="#64748b" font-size="12" font-weight="600" text-anchor="middle">3</text>
+        <text x="310" y="342" fill="#64748b" font-size="12" font-weight="600" text-anchor="middle">4</text>
+        <text x="375" y="342" fill="#64748b" font-size="12" font-weight="600" text-anchor="middle">5</text>
+
+        <text x="34" y="259" fill="#64748b" font-size="12" font-weight="600">1</text>
+        <text x="34" y="194" fill="#64748b" font-size="12" font-weight="600">2</text>
+        <text x="34" y="129" fill="#64748b" font-size="12" font-weight="600">3</text>
+
+        <!-- Polytope Region -->
+        <polygon points="50,320 50,112 265.3,198 326.2,320" 
+                 fill="rgba(37, 99, 235, 0.1)" 
+                 stroke="#2563eb" 
+                 stroke-width="2"/>
+
+        <!-- Boundary line 4x1 + 2x2 = 17 passing through (4.25, 0) and (3.31, 1.88) -->
+        <line x1="230" y1="128" x2="345" y2="358" stroke="#dc2626" stroke-width="1.5" stroke-dasharray="4,4"/>
+        <text x="340" y="240" fill="#dc2626" font-size="11" font-weight="600" transform="rotate(64,340,240)">Constraint 2 Limit</text>
+
+        <!-- Rounding Box surrounding (3,1), (3,2), (4,1), (4,2) -->
+        <rect x="225" y="170" width="105" height="105" rx="6" fill="rgba(241, 245, 249, 0.5)" stroke="#94a3b8" stroke-dasharray="3,3"/>
+        <text x="235" y="162" fill="#64748b" font-size="11" font-weight="700">Rounding Neighborhood</text>
+
+        <!-- The Continuous Point (3.31, 1.88) -->
+        <!-- Coordinates: (265.3, 198.1) -->
+        <circle cx="265.3" cy="198.1" r="7" fill="#2563eb"/>
+        <text x="275" y="194" fill="#2563eb" font-size="11" font-weight="800">LP Opt (3.31, 1.88)</text>
+
+        <!-- Direction Vectors to the 4 corners -->
+        <line x1="265.3" y1="198.1" x2="245" y2="190" stroke="#059669" stroke-width="1.8"/>
+        <line x1="265.3" y1="198.1" x2="245" y2="255" stroke="#d97706" stroke-width="1.8"/>
+        <line x1="265.3" y1="198.1" x2="310" y2="255" stroke="#dc2626" stroke-width="1.8"/>
+        <line x1="265.3" y1="198.1" x2="310" y2="190" stroke="#dc2626" stroke-width="1.8"/>
+
+        <!-- Corner 1: (3, 2) [245, 190] -> Optimal -->
+        <circle cx="245" cy="190" r="7" fill="#059669"/>
+        <text x="175" y="195" fill="#059669" font-size="11" font-weight="800">(3,2) Z=17 &#10003;</text>
+
+        <!-- Corner 2: (3, 1) [245, 255] -> Suboptimal -->
+        <circle cx="245" cy="255" r="6" fill="#d97706"/>
+        <text x="175" y="260" fill="#d97706" font-size="11" font-weight="800">(3,1) Z=13 &#33;</text>
+
+        <!-- Corner 3: (4, 1) [310, 255] -> Infeasible -->
+        <circle cx="310" cy="255" r="6" fill="#dc2626"/>
+        <line x1="305" y1="250" x2="315" y2="260" stroke="#ffffff" stroke-width="2"/>
+        <line x1="315" y1="250" x2="305" y2="260" stroke="#ffffff" stroke-width="2"/>
+        <text x="320" y="260" fill="#dc2626" font-size="11" font-weight="800">(4,1) Outside &cross;</text>
+
+        <!-- Corner 4: (4, 2) [310, 190] -> Infeasible -->
+        <circle cx="310" cy="190" r="6" fill="#dc2626"/>
+        <line x1="305" y1="185" x2="315" y2="195" stroke="#ffffff" stroke-width="2"/>
+        <line x1="315" y1="185" x2="305" y2="195" stroke="#ffffff" stroke-width="2"/>
+        <text x="320" y="195" fill="#dc2626" font-size="11" font-weight="800">(4,2) Outside &cross;</text>
+      </svg>
+    </div>
+  </div>
+
+</div>

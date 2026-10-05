@@ -1,0 +1,146 @@
+<div class="slide-grid" 
+     data-lb="-&infin; (None)" 
+     data-ub="--" 
+     data-gap="100.0%" 
+     data-queue="[ Root Node 0 ]">
+
+  <!-- Left Column: Pedagogical Walkthrough -->
+  <div class="slide-text-col">
+    <div>
+      <span class="step-tag-pill pill-blue">Executive Summary • The Big Picture</span>
+      <h2 class="slide-heading">The Entire Algorithm in 60 Seconds</h2>
+      <p class="lead-p">
+        In integer linear programming, suspense makes learning harder. 
+        Here is the entire story upfront so you can track how each decision leads directly to the solution.
+      </p>
+
+      <!-- The Movie Spoiler Callout Box -->
+      <div class="callout-box spoiler">
+        <div style="font-size: 1.8rem; line-height: 1;">🎬</div>
+        <div>
+          <strong style="font-size: 1.15rem; display: block; margin-bottom: 4px;">
+            SPOILER ALERT (The Destination Revealed):
+          </strong>
+          The true integer optimal solution is <strong>x₁* = 3, x₂* = 2</strong> with objective value <strong>Z* = 17</strong>.
+          <br/>
+          Continuous Simplex will get trapped by the fractional corner <strong>(3.31, 1.88)</strong> with <strong>Z = 17.44</strong>. 
+          Branch and Cut will systematically eliminate that trap.
+        </div>
+      </div>
+
+      <!-- Problem Statement Card -->
+      <div class="math-card">
+        <strong>The Problem We Are Solving:</strong><br/>
+        Maximize &nbsp; Z = 3 x₁ + 4 x₂<br/>
+        Subject to:<br/>
+        &nbsp;&nbsp;(1) 2 x₁ + 5 x₂ &le; 16<br/>
+        &nbsp;&nbsp;(2) 4 x₁ + 2 x₂ &le; 17<br/>
+        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;x₁, x₂ &ge; 0 and <strong>INTEGER</strong>
+      </div>
+
+      <p class="lead-p" style="font-size: 1.05rem;">
+        <strong>The 3-Act Roadmap Ahead:</strong>
+      </p>
+      <ol style="margin-left: 24px; font-size: 1.0rem; line-height: 1.7; color: var(--text-body);">
+        <li><strong>Continuous Relaxation:</strong> Drop integrality to obtain an optimistic upper bound of <strong>17.44</strong>.</li>
+        <li><strong>The Cut Phase:</strong> Add a valid algebraic cut (<strong>x₁ + x₂ &le; 5</strong>) to slice off the fractional trap without touching any integer points.</li>
+        <li><strong>The Branch Phase:</strong> Split the space into <strong>x₁ &le; 3</strong> (lands directly on the integer winner) and <strong>x₁ &ge; 4</strong> (pruned because its bound drops below 17).</li>
+      </ol>
+    </div>
+
+    <!-- The Persistent Pruning Checklist for Slide 1 -->
+    <div class="pruning-checklist">
+      <div class="checklist-title">Status Checklist (Step 0 - Start)</div>
+      <ul class="checklist-items">
+        <li><span class="check-icon inactive">&bull;</span> Prune by Integrality: <em>Not yet evaluated (Node 0 unparsed)</em></li>
+        <li><span class="check-icon inactive">&bull;</span> Prune by Bound: <em>No incumbent in hand yet (LB = -&infin;)</em></li>
+        <li><span class="check-icon inactive">&bull;</span> Prune by Infeasibility: <em>Region contains feasible points</em></li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- Right Column: Visual Stage -->
+  <div class="slide-visual-col">
+    <div class="visual-topbar">
+      <span class="visual-title">Roadmap: Relaxation vs. True Integer Hull</span>
+      <div class="diagram-legend">
+        <span class="legend-chip"><span class="chip-circle" style="background: #2563eb;"></span>LP Region</span>
+        <span class="legend-chip"><span class="chip-circle" style="background: #059669;"></span>Integer Target</span>
+      </div>
+    </div>
+
+    <div class="svg-display-wrap">
+      <svg viewBox="0 0 460 380" aria-label="Coordinate diagram of LP relaxation and true integer convex hull">
+        <defs>
+          <pattern id="grid-dots-s1" width="65" height="65" patternUnits="userSpaceOnUse">
+            <circle cx="65" cy="65" r="1.5" fill="#cbd5e1"/>
+          </pattern>
+        </defs>
+
+        <!-- Coordinate Grid Background -->
+        <rect x="50" y="30" width="375" height="290" fill="url(#grid-dots-s1)" />
+
+        <!-- Axes: Origin (50, 320) -->
+        <!-- x1 axis -->
+        <line x1="50" y1="320" x2="430" y2="320" stroke="#64748b" stroke-width="2.5" marker-end="url(#arrow)"/>
+        <text x="435" y="325" fill="#334155" font-size="14" font-weight="700">x₁</text>
+        <!-- x2 axis -->
+        <line x1="50" y1="320" x2="50" y2="25" stroke="#64748b" stroke-width="2.5"/>
+        <text x="44" y="18" fill="#334155" font-size="14" font-weight="700">x₂</text>
+
+        <!-- Axis Ticks & Numbers -->
+        <text x="115" y="342" fill="#64748b" font-size="12" font-weight="600" text-anchor="middle">1</text>
+        <text x="180" y="342" fill="#64748b" font-size="12" font-weight="600" text-anchor="middle">2</text>
+        <text x="245" y="342" fill="#64748b" font-size="12" font-weight="600" text-anchor="middle">3</text>
+        <text x="310" y="342" fill="#64748b" font-size="12" font-weight="600" text-anchor="middle">4</text>
+        <text x="375" y="342" fill="#64748b" font-size="12" font-weight="600" text-anchor="middle">5</text>
+
+        <text x="34" y="259" fill="#64748b" font-size="12" font-weight="600">1</text>
+        <text x="34" y="194" fill="#64748b" font-size="12" font-weight="600">2</text>
+        <text x="34" y="129" fill="#64748b" font-size="12" font-weight="600">3</text>
+        <text x="34" y="64" fill="#64748b" font-size="12" font-weight="600">4</text>
+
+        <!-- Continuous LP Relaxation Polytope (Blue) -->
+        <!-- (0,0)->[50,320], (0,3.2)->[50,112], (3.31,1.88)->[265.3,198], (4.25,0)->[326.2,320] -->
+        <polygon points="50,320 50,112 265.3,198 326.2,320" 
+                 fill="rgba(37, 99, 235, 0.12)" 
+                 stroke="#2563eb" 
+                 stroke-width="2.5"/>
+
+        <!-- True Integer Convex Hull (Dashed Green Polytope) -->
+        <!-- Vertices: (0,0)->[50,320], (0,3)->[50,125], (3,2)->[245,190], (4,0)->[310,320] -->
+        <polygon points="50,320 50,125 245,190 310,320" 
+                 fill="rgba(5, 150, 105, 0.18)" 
+                 stroke="#059669" 
+                 stroke-width="2" 
+                 stroke-dasharray="6,4"/>
+
+        <!-- Valid Integer Lattice Points Inside Polytope -->
+        <g fill="#475569">
+          <circle cx="115" cy="320" r="4"/><circle cx="180" cy="320" r="4"/><circle cx="245" cy="320" r="4"/><circle cx="310" cy="320" r="4"/>
+          <circle cx="115" cy="255" r="4"/><circle cx="180" cy="255" r="4"/><circle cx="245" cy="255" r="4"/>
+          <circle cx="115" cy="190" r="4"/><circle cx="180" cy="190" r="4"/>
+          <circle cx="50" cy="125" r="4"/>
+        </g>
+
+        <!-- Continuous Fractional Trap Marker -->
+        <circle cx="265.3" cy="198" r="6" fill="#dc2626"/>
+        <line x1="258" y1="191" x2="272" y2="205" stroke="#ffffff" stroke-width="2"/>
+        <line x1="272" y1="191" x2="258" y2="205" stroke="#ffffff" stroke-width="2"/>
+        <rect x="278" y="186" width="135" height="24" rx="4" fill="#fef2f2" stroke="#dc2626" stroke-width="1"/>
+        <text x="284" y="202" fill="#dc2626" font-size="11" font-weight="700">LP Peak: (3.31, 1.88)</text>
+
+        <!-- True Destination / Optimal Integer Marker -->
+        <circle cx="245" cy="190" r="8" fill="#059669"/>
+        <circle cx="245" cy="190" r="14" fill="none" stroke="#059669" stroke-width="2" opacity="0.6"/>
+        <rect x="155" y="145" width="140" height="26" rx="4" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+        <text x="162" y="162" fill="#059669" font-size="12" font-weight="800">🎯 WINNER: (3, 2) Z=17</text>
+
+        <!-- Annotation Label -->
+        <text x="65" y="295" fill="#2563eb" font-size="12" font-weight="600">Continuous Polytope</text>
+        <text x="65" y="145" fill="#059669" font-size="12" font-weight="700">True Integer Hull</text>
+      </svg>
+    </div>
+  </div>
+
+</div>
